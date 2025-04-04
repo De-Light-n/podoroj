@@ -1,0 +1,242 @@
+/* Загальний стиль футера */
+.footer {
+    background-color: #201c1c;
+    color: #fff;
+    padding-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    margin-top: 80px;
+}
+
+/* Верхній рядок футера */
+.footer-top {
+    background: #201c1c;
+    padding: 40px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 32px;
+    transition: all 0.3s ease;
+}
+
+.footer-top:hover {
+    background: #ffffff;
+    color: #201c1c;
+}
+
+/* Контент футера */
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-title {
+    font-size: 28px;
+    color: #ff3b3b;
+    font-weight: bold;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding-right: 20px;
+    max-width: 100%;
+    line-height: 1.2;
+}
+
+/* Ліва частина футера */
+.footer-left {
+    max-width: 300px;
+}
+
+.footer-left h2 {
+    color: #ff3b3b;
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Стилі для посилань з анімацією підкреслення */
+.footer-nav ul li a,
+.footer-services ul li a,
+.footer-contact p a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+.footer-nav ul li a::after,
+.footer-services ul li a::after,
+.footer-contact p a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ff3b3b;
+    transition: width 0.3s ease;
+}
+
+.footer-nav ul li a:hover::after,
+.footer-services ul li a:hover::after,
+.footer-contact p a:hover::after {
+    width: 100%;
+}
+
+/* Кнопка чату */
+.chat-btn {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #ff3b3b;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.chat-btn:hover {
+    color: #fff;
+    border-color: #ff3b3b;
+}
+
+.chat-btn:hover::before {
+    left: 0;
+}
+
+/* Колонки навігації */
+.footer-nav,
+.footer-services,
+.footer-contact {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-nav h4,
+.footer-services h4,
+.footer-contact h4 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-nav h4::after,
+.footer-services h4::after,
+.footer-contact h4::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: #ff3b3b;
+}
+
+.footer-nav ul,
+.footer-services ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-nav ul li,
+.footer-services ul li {
+    margin-bottom: 10px;
+}
+
+/* Контактні дані */
+.footer-contact p {
+    margin: 8px 0;
+}
+
+/* Нижня частина футера */
+.footer-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    font-size: 14px;
+}
+
+.footer-bottom a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+}
+
+.footer-bottom a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #ff3b3b;
+    transition: width 0.3s ease;
+}
+
+.footer-bottom a:hover::after {
+    width: 100%;
+}
+
+/* Великий текст на фоні */
+.footer-bg-text {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    font-size: 180px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    z-index: 1;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-left {
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+
+    .footer-nav h4::after,
+    .footer-services h4::after,
+    .footer-contact h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-bg-text {
+        font-size: 100px;
+    }
+}

@@ -1,0 +1,277 @@
+body {
+    font-family: "Inter", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding-top: 80px;
+}
+
+.post {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.post-header {
+    margin-bottom: 40px;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+/* Featured Image */
+.post-image {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+}
+
+/* Author Section */
+.post-author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.author-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.author-title {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Post Content */
+.post-content {
+    margin-bottom: 50px;
+}
+
+.post-content p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* Enhanced Comments Section */
+.comments-section {
+    border-top: 1px solid #eee;
+    padding-top: 40px;
+    margin-top: 50px;
+}
+
+.comments-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.comment {
+    display: flex;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: 600;
+}
+
+.comment-text {
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Like Button */
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.like-btn img {
+    width: 18px; /* Фіксований розмір іконки */
+    height: 18px;
+    transition: transform 0.2s ease;
+}
+
+.like-btn:hover img {
+    transform: scale(1.1); /* Ефект збільшення при наведенні */
+}
+
+.like-count {
+    font-size: 0.8rem;
+    color: #666;
+    margin-left: 3px;
+}
+
+/* Стан активного лайку (якщо вже лайкнуто) */
+.like-btn.active {
+    color: #ff3b3b;
+}
+
+.like-btn.active img {
+    filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
+/* Comment Form */
+.add-comment-form {
+    margin-top: 40px;
+    padding: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+.form-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.comment-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border 0.2s ease;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: #201c1c;
+}
+
+.form-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-btn {
+    background: #201c1c;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #333;
+}
+
+
+.post-actions {
+    margin: 2rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.like-btn, .share-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #666;
+    transition: all 0.2s ease;
+}
+
+.like-btn:hover, .share-btn:hover {
+    color: #333;
+}
+
+.like-btn.active {
+    color: #ff4757;
+}
+
+.like-icon, .share-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.like-count {
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+}
