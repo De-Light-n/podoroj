@@ -1,10 +1,21 @@
-body {
+.lets-chat-page {
     font-family: "Inter", Arial, sans-serif;
     line-height: 1.6;
     color: #fff;
     background-color: #201c1c;
     margin: 0;
     padding-top: 80px;
+    padding-bottom: 5vh;
+}
+
+.create-post-page {
+    font-family: "Inter", Arial, sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background-color: #201c1c;
+    margin: 0;
+    padding-top: 80px;
+    padding-bottom: 5vh;
 }
 
 .container {
@@ -254,12 +265,6 @@ h1 {
 
 .upload-btn:hover {
     background-color: #e56a4d;
-}
-
-.image-preview {
-    margin-top: 20px;
-    text-align: center;
-    display: none;
 }
 
 .image-preview img {

@@ -1,4 +1,4 @@
-body {
+.post-page {
     font-family: "Inter", Arial, sans-serif;
     line-height: 1.6;
     color: #333;
@@ -45,7 +45,7 @@ body {
     margin-bottom: 30px;
 }
 
-.author-avatar {
+.post-in-author-avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;

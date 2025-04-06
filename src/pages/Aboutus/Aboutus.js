@@ -1,14 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import "../../styles/styles.css";
 import './Aboutus.css';
 
 function AboutUs() {
     return (
         <div className="about-us-page">
-            <Header />
-
             <header>
                 <div className="hero">
                     <h3>Дивись на світ з нами</h3>
@@ -156,8 +152,6 @@ function AboutUs() {
                     </div>
                 </section>
             </div>
-
-            <Footer />
         </div>
     );
 }

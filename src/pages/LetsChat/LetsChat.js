@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import '../../styles/Forms.css';
 import './LetsChat.css';
 
@@ -35,8 +33,6 @@ function LetsChat() {
 
     return (
         <div className="lets-chat-page">
-            <Header />
-
             <div className="container">
                 <div className="left-column">
                     <div className="lets-chat-left-column">
@@ -113,8 +109,6 @@ function LetsChat() {
                     <button type="submit" className="cta-button">Надіслати повідомлення</button>
                 </form>
             </div>
-
-            <Footer redirectToChat={redirectToChat} />
         </div>
     );
 }

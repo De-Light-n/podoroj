@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { mainArticles } from '../../data/articles_data';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import defaultPost from '../../assets/images/default-post.jpg';
 import anonymousAvatar from '../../assets/icons/anonymous.png';
 import "../../styles/styles.css";
@@ -120,8 +118,6 @@ function Post() {
 
     return (
         <div className="post-page">
-            <Header />
-
             <article className="post">
                 <div className="post-header">
                     <h1 className="post-title">{article.title}</h1>
@@ -141,7 +137,7 @@ function Post() {
                     <img
                         src={getAvatarSource(article.authorImg)}
                         alt={article.author}
-                        className="author-avatar"
+                        className="post-in-author-avatar"
                         onError={(e) => {
                             e.target.src = anonymousAvatar;
                         }}
@@ -182,7 +178,7 @@ function Post() {
 
                     <form className="add-comment-form" onSubmit={handleCommentSubmit}>
                         <h3 className="form-title">Add a comment</h3>
-                        <div className="form-group">
+                        <div className="comments-form-group">
                             <textarea
                                 className="comment-input"
                                 placeholder="Write your comment here..."
@@ -223,8 +219,6 @@ function Post() {
                     </div>
                 </section>
             </article>
-
-            <Footer />
         </div>
     );
 }

@@ -121,7 +121,7 @@
     background: #ffffff;
 }
 
-.cards {
+.my-cards {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -129,7 +129,7 @@
     justify-content: center;
 }
 
-.card {
+.gal-card {
     display: flex;
     flex-direction: column;
     width: calc(33% - 20px);
@@ -142,29 +142,29 @@
     padding-bottom: 15px;
 }
 
-.card:hover {
+.gal-card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
 }
 
-.card-image-container {
+.gal-card-image-container {
     width: 100%;
     height: 250px;
     overflow: hidden;
 }
 
-.card-image {
+.gal-card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.card:hover .card-image {
+.gal-card:hover .gal-card-image {
     transform: scale(1.05);
 }
 
-.card-content {
+.gal-card-content {
     padding: 20px;
     display: flex;
     flex-direction: column;
