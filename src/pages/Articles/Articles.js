@@ -10,7 +10,7 @@ function Articles() {
     
     const parseDate = (dateStr) => {
         const [time, date] = dateStr.split(' ');
-        const [hours, minutes] = time.split('.');
+        const [hours, minutes] = time.split(':');
         const [day, month, year] = date.split('.');
         return new Date(`${year}-${month}-${day}T${hours}:${minutes}:00`);
     };

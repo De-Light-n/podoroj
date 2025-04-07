@@ -1,0 +1,147 @@
+/* Directions Page Styles */
+.directions-page .directions-header {
+    text-align: center;
+    padding: 80px 80px;
+    background: linear-gradient(to bottom, #201c1c, #1a1a1a);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    margin: 40px auto;
+    max-width: 1100px;
+    transition: transform 0.3s ease;
+}
+
+.directions-page .directions-header:hover {
+    transform: scale(1.02);
+}
+
+.directions-page .directions-header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    background: linear-gradient(to right, #ffffff, #bbbbbb);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.directions-page .directions-header p {
+    font-size: 18px;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #f0f0f0;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.directions-page .directions-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.directions-page .direction-card {
+    width: calc(33.333% - 20px);
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: white;
+    color: #201c1c;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.directions-page .direction-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transform: translateY(-5px);
+    background-color: #201c1c;
+    color: rgb(255, 255, 255);
+}
+
+.directions-page .direction-image-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.directions-page .direction-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.directions-page .direction-card:hover .direction-image {
+    transform: scale(1.05);
+}
+
+.directions-page .direction-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.directions-page .direction-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.directions-page .direction-content p {
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.directions-page .direction-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #201c1c;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 2px solid #201c1c;
+}
+
+.directions-page .direction-card:hover .direction-button {
+    background-color: white;
+    color: #201c1c;
+    border-color: white;
+}
+
+.directions-page .direction-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .directions-page .direction-card {
+        width: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .directions-page .directions-header {
+        padding: 60px 20px;
+    }
+    
+    .directions-page .direction-card {
+        width: 100%;
+        max-width: 400px;
+    }
+}

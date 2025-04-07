@@ -90,24 +90,29 @@ function Post() {
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         if (!newComment.trim()) return;
-
+    
+        const now = new Date();
+        const formattedDate = now.toLocaleString('uk-UA', {
+            hour: '2-digit',
+            minute: '2-digit',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        }).replace(',', ''); // Видаляємо кому між датою і часом
+    
         const comment = {
             avatar: anonymousAvatar,
             author: 'Anonymous',
             text: newComment,
-            date: new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            })
+            date: formattedDate, // Форматована дата
         };
-
+    
         setComments([comment, ...comments]);
         setNewComment('');
-
+    
         const updatedArticle = {
             ...article,
-            comments: [comment, ...(article.comments || [])]
+            comments: [comment, ...(article.comments || [])],
         };
         localStorage.setItem('articlesData', JSON.stringify(
             mainArticles.map(a => a.id === updatedArticle.id ? updatedArticle : a)
