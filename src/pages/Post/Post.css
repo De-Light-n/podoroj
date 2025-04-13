@@ -275,3 +275,34 @@
         font-size: 2rem;
     }
 }
+
+
+/* Стилі для повідомлення про необхідність авторизації */
+.auth-required-message {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-required-message p {
+    margin: 0;
+    color: #6c757d;
+}
+
+.text-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.text-button:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+/* Інші існуючі стилі залишаються без змін */

@@ -1,37 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import defaultPost from '../../assets/images/default-post.jpg';
 import "../../styles/styles.css";
 import "./Gallery.css";
 
 function Gallery() {
   const navigate = useNavigate();
+  const [publications, setPublications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  const db = getFirestore();
 
   const redirectToCreate = () => {
     navigate("/create-post");
   };
 
-  // Дані публікацій
-  const publications = [
-    {
-      id: 1,
-      image: "istockphoto-665139550-612x612.jpg",
-      title: "Жарка пустеля",
-      date: "Опубліковано: 15.06.2023",
-    },
-    {
-      id: 2,
-      image: "mountains_6.jpg",
-      title: "Дивовижні пейзажі Карпат",
-      date: "Опубліковано: 10.06.2023",
-    },
-    {
-      id: 3,
-      image: "istockphoto-1044284546-612x612.jpg",
-      title: 'Небезпечна "Амазонка"',
-      date: "Опубліковано: 05.06.2023",
-    },
-  ];
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const q = query(collection(db, "posts"), where("authorId", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+
+        const posts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setPublications(posts);
+      } catch (error) {
+        console.error("Помилка при завантаженні постів:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserPosts();
+  }, [auth]);
 
   const getImageSource = (imgPath) => {
     try {
@@ -45,41 +54,27 @@ function Gallery() {
   };
 
   const handleEdit = (id) => {
-    // Логіка редагування
-    console.log(`Редагувати публікацію ${id}`);
     navigate(`/edit-post/${id}`);
   };
 
   const handleDelete = (id) => {
-    // Логіка видалення
     console.log(`Видалити публікацію ${id}`);
-    // Тут можна додати підтвердження видалення
+    // Тут можна додати логіку видалення з Firestore
   };
 
   return (
     <div className="gallery-page">
       <div className="publications-header">
         <h1>Фото галерея</h1>
-        <p>
-          Тут ви можете керувати своїми статтями, створювати їх або видаляти
-        </p>
+        <p>Тут ви можете керувати своїми статтями, створювати їх або видаляти</p>
       </div>
 
-      {/* Секція "Створити пост" */}
       <div className="create-post-section">
         <div className="create-post-card">
           <div className="create-post-content">
             <div className="create-post-icon">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
@@ -93,42 +88,39 @@ function Gallery() {
         </div>
       </div>
 
-      {/* Список публікацій */}
       <div className="publications-list">
-        <div className="my-cards">
-          {publications.map((publication) => (
-            <div key={publication.id} className="gal-card">
-              <div className="gal-card-image-container">
-                <img
-                  src={getImageSource(publication.image)}
-                  alt={publication.title}
-                  className="gal-card-image"
-                  onError={(e) => {
-                    e.target.src = defaultPost;
-                  }}
-                />
-              </div>
-              <div className="gal-card-content">
-                <h3 className="card-title">{publication.title}</h3>
-                <div className="card-date">{publication.date}</div>
-                <div className="publication-actions">
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(publication.id)}
-                  >
-                    Редагувати
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(publication.id)}
-                  >
-                    Видалити
-                  </button>
+        {loading ? (
+          <p>Завантаження...</p>
+        ) : (
+          <div className="my-cards">
+            {publications.map((publication) => (
+              <div key={publication.id} className="gal-card">
+                <div className="gal-card-image-container">
+                  <img
+                    src={getImageSource(publication.imageUrl)}
+                    alt={publication.title}
+                    className="gal-card-image"
+                    onError={(e) => {
+                      e.target.src = defaultPost;
+                    }}
+                  />
+                </div>
+                <div className="gal-card-content">
+                  <h3 className="card-title">{publication.title}</h3>
+                  <div className="card-date">
+                    {publication.createdAt?.toDate
+                      ? `Опубліковано: ${publication.createdAt.toDate().toLocaleDateString()}`
+                      : "Без дати"}
+                  </div>
+                  <div className="publication-actions">
+                    <button className="edit-btn" onClick={() => handleEdit(publication.id)}>Редагувати</button>
+                    <button className="delete-btn" onClick={() => handleDelete(publication.id)}>Видалити</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

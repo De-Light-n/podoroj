@@ -1,58 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PostCard from '../../components/PostCard/PostCard';
-import { mainArticles } from '../../data/articles_data';
+import { db, storage } from '../../components/firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { ref, getDownloadURL } from 'firebase/storage';
 import "./Articles.css";
 import "../../styles/Posts.css";
 
 function Articles() {
     const [sortBy, setSortBy] = useState('date-desc');
-    const halfLength = Math.ceil(mainArticles.length / 2);
-    
-    const parseDate = (dateStr) => {
-        const [time, date] = dateStr.split(' ');
-        const [hours, minutes] = time.split(':');
-        const [day, month, year] = date.split('.');
-        return new Date(`${year}-${month}-${day}T${hours}:${minutes}:00`);
-    };
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const sortArticles = (articles) => {
-        const sorted = [...articles];
-        
-        switch(sortBy) {
-            case 'date-asc':
-                sorted.sort((a, b) => parseDate(a.time) - parseDate(b.time));
-                break;
-            case 'date-desc':
-                sorted.sort((a, b) => parseDate(b.time) - parseDate(a.time));
-                break;
-            case 'likes-asc':
-                sorted.sort((a, b) => (a.likes || 0) - (b.likes || 0));
-                break;
-            case 'likes-desc':
-                sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-                break;
-            case 'title-asc':
-                sorted.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-            case 'title-desc':
-                sorted.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-            case 'comments-asc':
-                sorted.sort((a, b) => (a.comments?.length || 0) - (b.comments?.length || 0));
-                break;
-            case 'comments-desc':
-                sorted.sort((a, b) => (b.comments?.length || 0) - (a.comments?.length || 0));
-                break;
-            default:
-                break;
-        }
-        
-        return sorted;
-    };
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                // Отримуємо пости з Firestore
+                const postsRef = collection(db, 'posts');
+                let q;
+                
+                // Визначаємо порядок сортування в залежності від вибраного варіанту
+                switch(sortBy) {
+                    case 'date-asc':
+                        q = query(postsRef, orderBy('createdAt', 'asc'));
+                        break;
+                    case 'date-desc':
+                        q = query(postsRef, orderBy('createdAt', 'desc'));
+                        break;
+                    case 'likes-asc':
+                        q = query(postsRef, orderBy('likes', 'asc'));
+                        break;
+                    case 'likes-desc':
+                        q = query(postsRef, orderBy('likes', 'desc'));
+                        break;
+                    case 'title-asc':
+                        q = query(postsRef, orderBy('title', 'asc'));
+                        break;
+                    case 'title-desc':
+                        q = query(postsRef, orderBy('title', 'desc'));
+                        break;
+                    case 'comments-asc':
+                        q = query(postsRef, orderBy('comments', 'asc'));
+                        break;
+                    case 'comments-desc':
+                        q = query(postsRef, orderBy('comments', 'desc'));
+                        break;
+                    default:
+                        q = query(postsRef, orderBy('createdAt', 'desc'));
+                }
 
-    const sortedArticles = sortArticles(mainArticles);
-    const mainArticlesToRender = sortedArticles.slice(0, halfLength);
-    const sidebarArticlesToRender = sortedArticles.slice(halfLength);
+                const querySnapshot = await getDocs(q);
+                const articlesData = [];
+
+                // Для кожного поста отримуємо URL зображення з Storage
+                for (const doc of querySnapshot.docs) {
+                    const postData = doc.data();
+                    let imageUrl = postData.imageUrl;
+                    
+                    // Якщо URL зображення не зберігається у Firestore, отримуємо його з Storage
+                    if (!imageUrl && postData.imagePath) {
+                        const imageRef = ref(storage, postData.imagePath);
+                        imageUrl = await getDownloadURL(imageRef);
+                    }
+
+                    articlesData.push({
+                        id: doc.id,
+                        ...postData,
+                        imageUrl,
+                        time: postData.createdAt?.toDate().toLocaleString('uk-UA', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                        }).replace(',', ''),
+                        likes: postData.likes || 0,
+                        comments: postData.comments || []
+                    });
+                }
+
+                setArticles(articlesData);
+                setLoading(false);
+            } catch (err) {
+                console.error("Помилка завантаження постів:", err);
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+
+        fetchArticles();
+    }, [sortBy]);
+
+    const halfLength = Math.ceil(articles.length / 2);
+    const mainArticlesToRender = articles.slice(0, halfLength);
+    const sidebarArticlesToRender = articles.slice(halfLength);
+
+    if (loading) {
+        return <div className="loading">Завантаження...</div>;
+    }
+
+    if (error) {
+        return <div className="error">Помилка: {error}</div>;
+    }
 
     return (
         <div className="articles-page">

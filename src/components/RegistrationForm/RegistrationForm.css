@@ -1,0 +1,55 @@
+.lets-chat-page {
+  .auth-buttons {
+    display: flex;
+    justify-content:space-around;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  #signin-btn {
+    justify-self: right;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    color: #777;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .divider span {
+    padding: 0 10px;
+    background-color:#201c1c; /* або будь-який інший колір фону */
+    z-index: 1; /* піднімає текст над лініями */
+  }
+
+  .google-signin-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50vh;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .google-signin-btn:hover {
+    background-color: #201c1c;
+    color: #fff;
+    border: 1px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+}

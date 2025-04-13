@@ -1,9 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth, db, storage } from "../../components/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
 import "../../styles/Forms.css";
 import "./CreatePost.css";
 
 function CreatePost() {
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -12,13 +17,27 @@ function CreatePost() {
     description: "",
     tags: "",
   });
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Перевіряємо стан автентифікації
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) {
+        navigate("/login");
+        return;
+      }
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     e.preventDefault();
     const file = e.target.files?.[0] || e.dataTransfer?.files?.[0];
 
@@ -27,16 +46,14 @@ function CreatePost() {
       return;
     }
 
-    console.log("Файл обробляється:", file);
-
-    // Validate file type
+    // Валідація типу файлу
     const validTypes = ["image/jpeg", "image/png", "image/gif"];
     if (!validTypes.includes(file.type)) {
       alert("Будь ласка, виберіть зображення у форматі JPG, PNG або GIF.");
       return;
     }
 
-    // Validate file size (max 5MB)
+    // Валідація розміру файлу (максимум 5MB)
     if (file.size > 5 * 1024 * 1024) {
       alert("Файл занадто великий. Максимальний розмір - 5MB.");
       return;
@@ -44,12 +61,57 @@ function CreatePost() {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      setPreviewImage(event.target.result); // Встановлюємо прев'ю
-    };
-    reader.onerror = () => {
-      alert("Помилка при завантаженні файлу.");
+      setPreviewImage(event.target.result);
     };
     reader.readAsDataURL(file);
+  };
+
+  // Функція для завантаження зображення в Firebase Storage
+  const uploadImage = async (file) => {
+    if (!file) return null;
+
+    const storageRef = ref(
+      storage,
+      `posts/${user.uid}/${Date.now()}_${file.name}`
+    );
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user || !previewImage) return;
+
+    setLoading(true);
+    try {
+      const file = fileInputRef.current.files[0];
+      const imageUrl = await uploadImage(file);
+
+      const postData = {
+        title: formData.title,
+        content: formData.description,
+        tags: formData.tags.split(" ").filter((tag) => tag.startsWith("#")),
+        imageUrl: imageUrl,
+        authorId: user.uid,
+        authorName: user.displayName || "Anonymous",
+        authorAvatar: user.photoURL || null,
+        createdAt: serverTimestamp(),
+        comments: [],
+        likes: 0,
+        likedBy: [],
+      };
+
+      // Додаємо пост у колекцію 'posts'
+      const docRef = await addDoc(collection(db, "posts"), postData);
+      console.log("Post created with ID: ", docRef.id);
+
+      navigate(`/post/${docRef.id}`);
+    } catch (error) {
+      console.error("Error creating post: ", error);
+      alert("Помилка при створенні посту: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDragOver = (e) => {
@@ -70,12 +132,6 @@ function CreatePost() {
 
   const triggerFileInput = () => {
     fileInputRef.current.click();
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", { ...formData, image: previewImage });
-    // Тут буде логіка відправки форми
   };
 
   return (
@@ -180,8 +236,8 @@ function CreatePost() {
             сайті, щоб надихати інших мандрівників!
           </p>
 
-          <button type="submit" className="cta-button">
-            Зберегти історію
+          <button type="submit" className="cta-button" disabled={loading}>
+            {loading ? "Збереження..." : "Зберегти історію"}
           </button>
         </form>
       </div>
