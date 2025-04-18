@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import "./Header.css";
 import anonymousAvatar from "../../assets/icons/anonymous.png";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const Dropdown = ({ title, children, to, isOpen, setIsOpen }) => {
   const dropdownRef = useRef(null);
@@ -82,6 +83,8 @@ function Header() {
       await signOut(auth);
       navigate("/");
       setAvatarDropdownOpen(false);
+      window.location.reload();
+      ScrollToTop();
     } catch (error) {
       console.error("Помилка при виході:", error);
     }
@@ -317,7 +320,7 @@ function Header() {
       {user ? (
         <div className="user-info">
           <div className="user-name">
-            {user.displayName || user.email.split('@')[0]}
+            {user.displayName || user.email.split("@")[0]}
           </div>
           <div className="avatar-container" ref={avatarRef}>
             <img

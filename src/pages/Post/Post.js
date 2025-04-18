@@ -19,6 +19,7 @@ import defaultPost from "../../assets/images/default-post.jpg";
 import anonymousAvatar from "../../assets/icons/anonymous.png";
 import "../../styles/styles.css";
 import "./Post.css";
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 
 function Post() {
   const { id } = useParams();
@@ -163,24 +164,21 @@ function Post() {
 
   const formatDate = (date) => {
     if (!date) return "";
-    const dateObj =
-      date?.toDate?.() ||
-      (date?.seconds ? new Date(date.seconds * 1000) : null) ||
-      new Date(date) ||
-      new Date();
-
-    return dateObj
-      .toLocaleString("uk-UA", {
+    
+    const dateObj = date?.toDate?.() || 
+                   (date?.seconds ? new Date(date.seconds * 1000) : null) || 
+                   new Date(date);
+    
+    return dateObj.toLocaleString("uk-UA", {
         hour: "2-digit",
         minute: "2-digit",
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      })
-      .replace(",", "");
-  };
+    }).replace(",", "");
+};
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <LoadingPage/>;
   if (!post) return <div className="error">Post not found</div>;
 
   return (

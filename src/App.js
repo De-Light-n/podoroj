@@ -32,7 +32,7 @@ function App() {
           <Route path="/letschat" element={<LetsChat />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<LoginForm />} />
-
+          <Route path="/favorites/:userId" element={<Articles />} />
         </Routes>
         <Footer />
       </div>

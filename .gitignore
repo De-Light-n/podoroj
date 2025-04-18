@@ -3,7 +3,7 @@
 
 # database
 firebase.js
-
+serviceAccountKey.json
 
 # dependencies
 /node_modules

@@ -5,6 +5,7 @@ import { getFirestore, collection, query, where, getDocs } from "firebase/firest
 import defaultPost from '../../assets/images/default-post.jpg';
 import "../../styles/styles.css";
 import "./Gallery.css";
+import LoadingPage from "../../components/LoadingPage/LoadingPage";
 
 function Gallery() {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ function Gallery() {
 
       <div className="publications-list">
         {loading ? (
-          <p>Завантаження...</p>
+          <LoadingPage/>
         ) : (
           <div className="my-cards">
             {publications.map((publication) => (
