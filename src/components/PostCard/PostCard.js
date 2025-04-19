@@ -31,16 +31,19 @@ function PostCard({ article, isMain }) {
 
     try {
       // Використовуємо API замість прямої роботи з Firestore
-      const response = await fetch("/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: currentUser.uid,
-          articleId: article.id,
-        }),
-      });
+      const response = await fetch(
+        "https://podoroj-backend.onrender.com/api/favorites",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: currentUser.uid,
+            articleId: article.id,
+          }),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to update favorites");
 
