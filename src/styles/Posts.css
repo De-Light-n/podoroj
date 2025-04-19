@@ -147,7 +147,6 @@
     right: 0;
     top: 0;
     width: 25%; /* Сайдбар займає 25% ширини */
-    height: 100vh; /* Висота сайдбара на всю висоту екрану */
     background-color: #fff;
     color: #201c1c;
     padding: 20px;
