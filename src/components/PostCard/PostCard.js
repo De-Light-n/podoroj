@@ -32,7 +32,7 @@ function PostCard({ article, isMain }) {
 
     try {
       // Використовуємо API замість прямої роботи з Firestore
-      const response = await fetch("/api/favorites", {
+      const response = await fetch("https://podoroj-backend.onrender.com/api/favorites", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

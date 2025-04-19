@@ -33,7 +33,7 @@ function Articles() {
         let articlesData = [];
 
         if (userId) {
-          const response = await fetch(`/api/favorites/${userId}`);
+          const response = await fetch(`https://podoroj-backend.onrender.com/api/favorites/${userId}`);
           if (!response.ok) throw new Error("Failed to fetch favorites");
           articlesData = await response.json();
           setFavoritesMode(true);
@@ -121,7 +121,7 @@ function Articles() {
     }
 
     try {
-      const response = await fetch("/api/favorites", {
+      const response = await fetch("https://podoroj-backend.onrender.com/api/favorites", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

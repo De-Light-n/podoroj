@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Отримання вподобаних статей
-app.get('/api/favorites/:userId', async (req, res) => {
+app.get('https://podoroj-backend.onrender.com/api/favorites/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     const favoritesRef = db.collection('favorites').doc(userId);
@@ -63,7 +63,7 @@ app.get('/api/favorites/:userId', async (req, res) => {
 });
 
 // Додавання/видалення вподобаних
-app.post('/api/favorites', async (req, res) => {
+app.post('https://podoroj-backend.onrender.com/api/favorites', async (req, res) => {
   try {
     const { userId, articleId } = req.body;
     
