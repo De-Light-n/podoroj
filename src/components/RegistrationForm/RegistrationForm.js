@@ -101,6 +101,7 @@ function RegistrationForm() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       navigate("/");
+      return result;
     } catch (error) {
       console.error("Помилка реєстрації через Google:", error.message);
       alert(`Помилка реєстрації через Google: ${error.message}`);

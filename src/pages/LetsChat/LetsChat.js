@@ -27,10 +27,6 @@ function LetsChat() {
         navigate('/thank-you'); // Перенаправлення після відправки
     };
 
-    const redirectToChat = () => {
-        navigate('/letschat');
-    };
-
     return (
         <div className="lets-chat-page">
             <div className="container">

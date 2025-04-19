@@ -93,7 +93,7 @@ function Header() {
   const handleGalleryClick = (e) => {
     if (!user) {
       e.preventDefault();
-      navigate("/login");
+      navigate("/gallery");
     }
   };
 

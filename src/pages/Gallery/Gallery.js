@@ -41,7 +41,7 @@ function Gallery() {
     };
 
     fetchUserPosts();
-  }, [auth]);
+  }, [auth, db]);
 
   const getImageSource = (imgPath) => {
     try {

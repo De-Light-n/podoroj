@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import defaultPost from "../../assets/images/default-post.jpg";
 import anonymousAvatar from "../../assets/icons/anonymous.png";
-import { auth, db } from "../../components/firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { auth } from "../../components/firebase";
 import "./PostCard.css";
 
 function PostCard({ article, isMain }) {
@@ -32,16 +31,19 @@ function PostCard({ article, isMain }) {
 
     try {
       // Використовуємо API замість прямої роботи з Firestore
-      const response = await fetch("/api/favorites", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: currentUser.uid,
-          articleId: article.id,
-        }),
-      });
+      const response = await fetch(
+        "https://podoroj-backend.onrender.com/api/favorites",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: currentUser.uid,
+            articleId: article.id,
+          }),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to update favorites");
 
