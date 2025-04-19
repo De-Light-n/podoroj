@@ -107,7 +107,7 @@ function LoginForm() {
 
           <p className="note">
             Ще не маєте акаунту?{" "}
-            <span className="link" onClick={() => navigate("/register")}>
+            <span className="link" onClick={() => navigate("/podoroj/register")}>
               Зареєструватися
             </span>
           </p>

@@ -24,7 +24,7 @@ function CreatePost() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) {
-        navigate("/login");
+        navigate("/podoroj/login");
         return;
       }
       setUser(currentUser);
@@ -105,7 +105,7 @@ function CreatePost() {
       const docRef = await addDoc(collection(db, "posts"), postData);
       console.log("Post created with ID: ", docRef.id);
 
-      navigate(`/post/${docRef.id}`);
+      navigate(`/podoroj/post/${docRef.id}`);
     } catch (error) {
       console.error("Error creating post: ", error);
       alert("Помилка при створенні посту: " + error.message);

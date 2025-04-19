@@ -24,11 +24,11 @@ function LetsChat() {
         e.preventDefault();
         console.log('Form submitted:', formData);
         // Тут можна додати логіку відправки форми
-        navigate('/thank-you'); // Перенаправлення після відправки
+        navigate('/podoroj/thank-you'); // Перенаправлення після відправки
     };
 
     const redirectToChat = () => {
-        navigate('/letschat');
+        navigate('/podoroj/letschat');
     };
 
     return (

@@ -100,7 +100,7 @@ function RegistrationForm() {
   const handleGoogleSignUp = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      navigate("/");
+      navigate("/podoroj/");
     } catch (error) {
       console.error("Помилка реєстрації через Google:", error.message);
       alert(`Помилка реєстрації через Google: ${error.message}`);
@@ -214,7 +214,7 @@ function RegistrationForm() {
               type="button"
               className="cta-button"
               id="signin-btn"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/podoroj/login")}
             >
               Я вже маю акаунт
             </button>

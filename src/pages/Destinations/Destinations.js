@@ -57,7 +57,7 @@ const Destinations = () => {
             <div className="direction-content">
               <h2>{region.name}</h2>
               <p>{region.description}</p>
-              <Link to={`/region/${region.id}`} className="direction-button">Детальніше</Link>
+              <Link to={`/podoroj/region/${region.id}`} className="direction-button">Детальніше</Link>
             </div>
           </div>
         ))}

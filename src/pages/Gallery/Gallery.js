@@ -55,7 +55,7 @@ function Gallery() {
   };
 
   const handleEdit = (id) => {
-    navigate(`/edit-post/${id}`);
+    navigate(`/podoroj/edit-post/${id}`);
   };
 
   const handleDelete = (id) => {

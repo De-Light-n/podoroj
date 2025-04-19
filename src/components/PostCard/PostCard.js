@@ -93,7 +93,7 @@ function PostCard({ article, isMain }) {
   if (isMain) {
     return (
       <Link
-        to={`/post/${article.id}`}
+        to={`/podoroj/post/${article.id}`}
         className={`card ${isLiked ? "liked" : ""}`}
       >
         <div className="card-image-container">
@@ -149,7 +149,7 @@ function PostCard({ article, isMain }) {
   }
 
   return (
-    <Link to={`/post/${article.id}`} className="sidebar-post-link">
+    <Link to={`/podoroj/post/${article.id}`} className="sidebar-post-link">
       <div className="sidebar-post">
         <h3>{article.authorName || "Анонім"}</h3>
         <p>{article.title}</p>

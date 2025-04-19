@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",
-  "homepage": "https://de-light-n.github.io/podoroj",
+  "homepage": "https://de-light-n.github.io",
   "dependencies": {
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",

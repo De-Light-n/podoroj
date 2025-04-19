@@ -22,17 +22,17 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route path="/" element={<Articles />} />
-          <Route path="/articles" element={<Articles />} />
-          <Route path="/destinations" element={<Destinations />} />
-          <Route path="/post/:id" element={<Post />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/letschat" element={<LetsChat />} />
-          <Route path="/register" element={<RegistrationForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/favorites/:userId" element={<Articles />} />
+          <Route path="/podoroj/" element={<Articles />} />
+          <Route path="/podoroj/articles" element={<Articles />} />
+          <Route path="/podoroj/destinations" element={<Destinations />} />
+          <Route path="/podoroj/post/:id" element={<Post />} />
+          <Route path="/podoroj/about" element={<AboutUs />} />
+          <Route path="/podoroj/gallery" element={<Gallery />} />
+          <Route path="/podoroj/create-post" element={<CreatePost />} />
+          <Route path="/podoroj/letschat" element={<LetsChat />} />
+          <Route path="/podoroj/register" element={<RegistrationForm />} />
+          <Route path="/podoroj/login" element={<LoginForm />} />
+          <Route path="/podoroj/favorites/:userId" element={<Articles />} />
         </Routes>
         <Footer />
       </div>

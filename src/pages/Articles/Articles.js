@@ -20,7 +20,7 @@ function Articles() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (userId && user && user.uid !== userId) {
-        navigate("/articles");
+        navigate("/podoroj/articles");
       }
     });
     return () => unsubscribe();
@@ -187,7 +187,7 @@ function Articles() {
         {!favoritesMode && auth.currentUser && (
           <button
             className="cta-button"
-            onClick={() => navigate(`/favorites/${auth.currentUser.uid}`)}
+            onClick={() => navigate(`/podoroj/favorites/${auth.currentUser.uid}`)}
           >
             Переглянути мої вподобані
           </button>

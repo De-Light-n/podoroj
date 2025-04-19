@@ -71,7 +71,7 @@ function Header() {
   };
 
   const handleRegisterClick = () => {
-    navigate("/register");
+    navigate("/podoroj/register");
   };
 
   const handleAvatarClick = () => {
@@ -81,7 +81,7 @@ function Header() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/");
+      navigate("/podoroj/");
       setAvatarDropdownOpen(false);
       window.location.reload();
       ScrollToTop();
@@ -93,7 +93,7 @@ function Header() {
   const handleGalleryClick = (e) => {
     if (!user) {
       e.preventDefault();
-      navigate("/gallery");
+      navigate("/podoroj/gallery");
     }
   };
 
@@ -101,24 +101,24 @@ function Header() {
     {
       title: "Подорожі",
       links: [
-        { to: "/articles/latest", text: "Останні статті" },
-        { to: "/articles/popular", text: "Популярне" },
-        { to: "/articles/recommended", text: "Рекомендовані місця" },
-        { to: "/articles/adventure", text: "Екстремальні подорожі" },
-        { to: "/articles/road-trips", text: "Автомандрівки" },
-        { to: "/articles", text: "Переглянути всі", className: "view-all" },
+        { to: "/podoroj/articles/latest", text: "Останні статті" },
+        { to: "/podoroj/articles/popular", text: "Популярне" },
+        { to: "/podoroj/articles/recommended", text: "Рекомендовані місця" },
+        { to: "/podoroj/articles/adventure", text: "Екстремальні подорожі" },
+        { to: "/podoroj/articles/road-trips", text: "Автомандрівки" },
+        { to: "/podoroj/articles", text: "Переглянути всі", className: "view-all" },
       ],
     },
     {
       title: "Поради",
       links: [
-        { to: "/articles/budget-travel", text: "Бюджетні подорожі" },
-        { to: "/articles/saving-tips", text: "Як зекономити" },
-        { to: "/articles/packing-list", text: "Що взяти в дорогу" },
-        { to: "/articles/safety", text: "Безпека у подорожах" },
-        { to: "/articles/insurance", text: "Туристичні страховки" },
+        { to: "/podoroj/articles/budget-travel", text: "Бюджетні подорожі" },
+        { to: "/podoroj/articles/saving-tips", text: "Як зекономити" },
+        { to: "/podoroj/articles/packing-list", text: "Що взяти в дорогу" },
+        { to: "/podoroj/articles/safety", text: "Безпека у подорожах" },
+        { to: "/podoroj/articles/insurance", text: "Туристичні страховки" },
         {
-          to: "/articles/tips",
+          to: "/podoroj/articles/tips",
           text: "Переглянути всі",
           className: "view-all",
         },
@@ -127,13 +127,13 @@ function Header() {
     {
       title: "Культура & Їжа",
       links: [
-        { to: "/articles/traditions", text: "Місцеві традиції" },
-        { to: "/articles/world-cuisine", text: "Кухні світу" },
-        { to: "/articles/restaurants", text: "Ресторани та кафе" },
-        { to: "/articles/food-tours", text: "Гастрономічні тури" },
-        { to: "/articles/festivals", text: "Фестивалі та свята" },
+        { to: "/podoroj/articles/traditions", text: "Місцеві традиції" },
+        { to: "/podoroj/articles/world-cuisine", text: "Кухні світу" },
+        { to: "/podoroj/articles/restaurants", text: "Ресторани та кафе" },
+        { to: "/podoroj/articles/food-tours", text: "Гастрономічні тури" },
+        { to: "/podoroj/articles/festivals", text: "Фестивалі та свята" },
         {
-          to: "/articles/culture",
+          to: "/podoroj/articles/culture",
           text: "Переглянути всі",
           className: "view-all",
         },
@@ -142,13 +142,13 @@ function Header() {
     {
       title: "Путівники",
       links: [
-        { to: "/articles/city-guides", text: "Маршрути по містах" },
-        { to: "/articles/hiking", text: "Похідні маршрути" },
-        { to: "/articles/excursions", text: "Екскурсії" },
-        { to: "/articles/weekend", text: "Вихідні подорожі" },
-        { to: "/articles/seasonal", text: "Сезонні путівники" },
+        { to: "/podoroj/articles/city-guides", text: "Маршрути по містах" },
+        { to: "/podoroj/articles/hiking", text: "Похідні маршрути" },
+        { to: "/podoroj/articles/excursions", text: "Екскурсії" },
+        { to: "/podoroj/articles/weekend", text: "Вихідні подорожі" },
+        { to: "/podoroj/articles/seasonal", text: "Сезонні путівники" },
         {
-          to: "/articles/guides",
+          to: "/podoroj/articles/guides",
           text: "Переглянути всі",
           className: "view-all",
         },
@@ -157,13 +157,13 @@ function Header() {
     {
       title: "Життя в дорозі",
       links: [
-        { to: "/articles/digital-nomad", text: "Робота у подорожах" },
-        { to: "/articles/long-term", text: "Довготривалі подорожі" },
-        { to: "/articles/volunteering", text: "Волонтерські програми" },
-        { to: "/articles/backpacking", text: "Бекпекінг" },
-        { to: "/articles/minimalism", text: "Мінімалізм у подорожах" },
+        { to: "/podoroj/articles/digital-nomad", text: "Робота у подорожах" },
+        { to: "/podoroj/articles/long-term", text: "Довготривалі подорожі" },
+        { to: "/podoroj/articles/volunteering", text: "Волонтерські програми" },
+        { to: "/podoroj/articles/backpacking", text: "Бекпекінг" },
+        { to: "/podoroj/articles/minimalism", text: "Мінімалізм у подорожах" },
         {
-          to: "/articles/life-on-road",
+          to: "/podoroj/articles/life-on-road",
           text: "Переглянути всі",
           className: "view-all",
         },
@@ -175,13 +175,13 @@ function Header() {
     {
       title: "Європа",
       links: [
-        { to: "/destinations/italy", text: "Італія" },
-        { to: "/destinations/france", text: "Франція" },
-        { to: "/destinations/spain", text: "Іспанія" },
-        { to: "/destinations/germany", text: "Німеччина" },
-        { to: "/destinations/ukraine", text: "Україна" },
+        { to: "/podoroj/destinations/italy", text: "Італія" },
+        { to: "/podoroj/destinations/france", text: "Франція" },
+        { to: "/podoroj/destinations/spain", text: "Іспанія" },
+        { to: "/podoroj/destinations/germany", text: "Німеччина" },
+        { to: "/podoroj/destinations/ukraine", text: "Україна" },
         {
-          to: "/destinations/europe",
+          to: "/podoroj/destinations/europe",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -190,13 +190,13 @@ function Header() {
     {
       title: "Азія",
       links: [
-        { to: "/destinations/thailand", text: "Таїланд" },
-        { to: "/destinations/india", text: "Індія" },
-        { to: "/destinations/japan", text: "Японія" },
-        { to: "/destinations/vietnam", text: "В'єтнам" },
-        { to: "/destinations/indonesia", text: "Індонезія" },
+        { to: "/podoroj/destinations/thailand", text: "Таїланд" },
+        { to: "/podoroj/destinations/india", text: "Індія" },
+        { to: "/podoroj/destinations/japan", text: "Японія" },
+        { to: "/podoroj/destinations/vietnam", text: "В'єтнам" },
+        { to: "/podoroj/destinations/indonesia", text: "Індонезія" },
         {
-          to: "/destinations/asia",
+          to: "/podoroj/destinations/asia",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -205,13 +205,13 @@ function Header() {
     {
       title: "Америка",
       links: [
-        { to: "/destinations/usa", text: "США" },
-        { to: "/destinations/brazil", text: "Бразилія" },
-        { to: "/destinations/mexico", text: "Мексика" },
-        { to: "/destinations/canada", text: "Канада" },
-        { to: "/destinations/argentina", text: "Аргентина" },
+        { to: "/podoroj/destinations/usa", text: "США" },
+        { to: "/podoroj/destinations/brazil", text: "Бразилія" },
+        { to: "/podoroj/destinations/mexico", text: "Мексика" },
+        { to: "/podoroj/destinations/canada", text: "Канада" },
+        { to: "/podoroj/destinations/argentina", text: "Аргентина" },
         {
-          to: "/destinations/america",
+          to: "/podoroj/destinations/america",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -220,13 +220,13 @@ function Header() {
     {
       title: "Африка",
       links: [
-        { to: "/destinations/egypt", text: "Єгипет" },
-        { to: "/destinations/kenya", text: "Кенія" },
-        { to: "/destinations/morocco", text: "Марокко" },
-        { to: "/destinations/south-africa", text: "ПАР" },
-        { to: "/destinations/tanzania", text: "Танзанія" },
+        { to: "/podoroj/destinations/egypt", text: "Єгипет" },
+        { to: "/podoroj/destinations/kenya", text: "Кенія" },
+        { to: "/podoroj/destinations/morocco", text: "Марокко" },
+        { to: "/podoroj/destinations/south-africa", text: "ПАР" },
+        { to: "/podoroj/destinations/tanzania", text: "Танзанія" },
         {
-          to: "/destinations/africa",
+          to: "/podoroj/destinations/africa",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -235,13 +235,13 @@ function Header() {
     {
       title: "Океанія",
       links: [
-        { to: "/destinations/australia", text: "Австралія" },
-        { to: "/destinations/new-zealand", text: "Нова Зеландія" },
-        { to: "/destinations/fiji", text: "Фіджі" },
-        { to: "/destinations/bali", text: "Балі" },
-        { to: "/destinations/samoa", text: "Самоа" },
+        { to: "/podoroj/destinations/australia", text: "Австралія" },
+        { to: "/podoroj/destinations/new-zealand", text: "Нова Зеландія" },
+        { to: "/podoroj/destinations/fiji", text: "Фіджі" },
+        { to: "/podoroj/destinations/bali", text: "Балі" },
+        { to: "/podoroj/destinations/samoa", text: "Самоа" },
         {
-          to: "/destinations/oceania",
+          to: "/podoroj/destinations/oceania",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -250,13 +250,13 @@ function Header() {
     {
       title: "Полярні регіони",
       links: [
-        { to: "/destinations/antarctica", text: "Антарктида" },
-        { to: "/destinations/arctic", text: "Арктика" },
-        { to: "/destinations/iceland", text: "Ісландія" },
-        { to: "/destinations/greenland", text: "Гренландія" },
-        { to: "/destinations/norway", text: "Північна Норвегія" },
+        { to: "/podoroj/destinations/antarctica", text: "Антарктида" },
+        { to: "/podoroj/destinations/arctic", text: "Арктика" },
+        { to: "/podoroj/destinations/iceland", text: "Ісландія" },
+        { to: "/podoroj/destinations/greenland", text: "Гренландія" },
+        { to: "/podoroj/destinations/norway", text: "Північна Норвегія" },
         {
-          to: "/destinations/polar",
+          to: "/podoroj/destinations/polar",
           text: "Дивитися всі",
           className: "view-all",
         },
@@ -274,7 +274,7 @@ function Header() {
           <div onMouseEnter={() => handleMouseEnter("articles")}>
             <Dropdown
               title="Статті"
-              to="/articles"
+              to="/podoroj/articles"
               isOpen={openDropdown === "articles"}
               setIsOpen={setOpenDropdown}
             >
@@ -291,7 +291,7 @@ function Header() {
           <div onMouseEnter={() => handleMouseEnter("destinations")}>
             <Dropdown
               title="Напрямки"
-              to="/destinations"
+              to="/podoroj/destinations"
               isOpen={openDropdown === "destinations"}
               setIsOpen={setOpenDropdown}
             >
@@ -306,13 +306,13 @@ function Header() {
           </div>
 
           <li className="nav-item">
-            <Link to="/gallery" onClick={handleGalleryClick}>
+            <Link to="/podoroj/gallery" onClick={handleGalleryClick}>
               Фотогалерея
             </Link>
           </li>
 
           <li className="nav-item">
-            <Link to="/about">Про нас</Link>
+            <Link to="/podoroj/about">Про нас</Link>
           </li>
         </ul>
       </div>

@@ -46,7 +46,7 @@ function Post() {
         const postSnap = await getDoc(postRef);
 
         if (!postSnap.exists()) {
-          navigate("/articles");
+          navigate("/podoroj/articles");
           return;
         }
 
@@ -92,7 +92,7 @@ function Post() {
 
   const handleLike = async () => {
     if (!user) {
-      navigate("/login");
+      navigate("/podoroj/login");
       return;
     }
 
@@ -115,7 +115,7 @@ function Post() {
 
   const handleShare = () => {
     if (!user) {
-      navigate("/login");
+      navigate("/podoroj/login");
       return;
     }
 
@@ -272,7 +272,7 @@ function Post() {
           ) : (
             <div className="auth-required-message">
               <p>
-                Please <button className="text-button" onClick={() => navigate("/login")}>sign in</button> to leave a comment.
+                Please <button className="text-button" onClick={() => navigate("/podoroj/login")}>sign in</button> to leave a comment.
               </p>
             </div>
           )}
