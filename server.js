@@ -44,129 +44,147 @@ app.use((req, res, next) => {
 });
 
 // Отримання вподобаних статей
-app.get("/api/favorites/:userId", async (req, res) => {
-  try {
-    console.log("\nGET /api/favorites called with userId:", req.params.userId);
+app.get(
+  "https://podoroj-backend.onrender.com/api/favorites/:userId",
+  async (req, res) => {
+    try {
+      console.log(
+        "\nGET https://podoroj-backend.onrender.com/api/favorites called with userId:",
+        req.params.userId
+      );
 
-    const userId = req.params.userId;
-    const favoritesRef = db.collection("favorites").doc(userId);
+      const userId = req.params.userId;
+      const favoritesRef = db.collection("favorites").doc(userId);
 
-    console.log("Fetching favorites for user:", userId);
-    const doc = await favoritesRef.get();
+      console.log("Fetching favorites for user:", userId);
+      const doc = await favoritesRef.get();
 
-    if (!doc.exists) {
-      console.log("No favorites found for user:", userId);
-      return res.json([]);
+      if (!doc.exists) {
+        console.log("No favorites found for user:", userId);
+        return res.json([]);
+      }
+
+      const favorites = doc.data().articles || [];
+      console.log("Found favorites:", favorites);
+
+      const articlesPromises = favorites.map((id) => {
+        console.log("Fetching post with ID:", id);
+        return db.collection("posts").doc(id).get();
+      });
+
+      const articlesSnapshots = await Promise.all(articlesPromises);
+      console.log("Fetched", articlesSnapshots.length, "posts");
+
+      const articlesData = articlesSnapshots
+        .filter((snap) => snap.exists)
+        .map((snap) => ({
+          id: snap.id,
+          ...snap.data(),
+          likedBy: [userId],
+        }));
+
+      console.log("Returning articles data");
+      res.json(articlesData);
+    } catch (error) {
+      console.error(
+        "Error in GET https://podoroj-backend.onrender.com/api/favorites:",
+        error
+      );
+      res.status(500).json({ error: "Internal server error" });
     }
-
-    const favorites = doc.data().articles || [];
-    console.log("Found favorites:", favorites);
-
-    const articlesPromises = favorites.map((id) => {
-      console.log("Fetching post with ID:", id);
-      return db.collection("posts").doc(id).get();
-    });
-
-    const articlesSnapshots = await Promise.all(articlesPromises);
-    console.log("Fetched", articlesSnapshots.length, "posts");
-
-    const articlesData = articlesSnapshots
-      .filter((snap) => snap.exists)
-      .map((snap) => ({
-        id: snap.id,
-        ...snap.data(),
-        likedBy: [userId],
-      }));
-
-    console.log("Returning articles data");
-    res.json(articlesData);
-  } catch (error) {
-    console.error("Error in GET /api/favorites:", error);
-    res.status(500).json({ error: "Internal server error" });
   }
-});
+);
 
 // Додавання/видалення вподобаних
-app.post("/api/favorites", async (req, res) => {
-  try {
-    console.log("\nPOST /api/favorites called with body:", req.body);
+app.post(
+  "https://podoroj-backend.onrender.com/api/favorites",
+  async (req, res) => {
+    try {
+      console.log(
+        "\nPOST https://podoroj-backend.onrender.com/api/favorites called with body:",
+        req.body
+      );
 
-    const { userId, articleId } = req.body;
+      const { userId, articleId } = req.body;
 
-    if (!userId || !articleId) {
-      console.error(
-        "Missing required fields - userId:",
+      if (!userId || !articleId) {
+        console.error(
+          "Missing required fields - userId:",
+          userId,
+          "articleId:",
+          articleId
+        );
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      console.log(
+        "Processing favorite for user:",
         userId,
-        "articleId:",
+        "and article:",
         articleId
       );
-      return res.status(400).json({ error: "Missing required fields" });
+
+      const favoritesRef = db.collection("favorites").doc(userId);
+      const postRef = db.collection("posts").doc(articleId);
+
+      // Отримуємо поточний стан
+      console.log("Fetching current state...");
+      const [favoritesSnap, postSnap] = await Promise.all([
+        favoritesRef.get(),
+        postRef.get(),
+      ]);
+
+      let articles = favoritesSnap.exists
+        ? favoritesSnap.data().articles || []
+        : [];
+      const isFavorite = articles.includes(articleId);
+      console.log(
+        "Current state - isFavorite:",
+        isFavorite,
+        "articles:",
+        articles
+      );
+
+      if (isFavorite) {
+        // Видалення з обраного
+        articles = articles.filter((id) => id !== articleId);
+        console.log("Removing favorite. New articles array:", articles);
+
+        await favoritesRef.set({ articles });
+        console.log("Updated favorites collection");
+
+        await postRef.update({
+          likes: admin.firestore.FieldValue.increment(-1),
+          likedBy: admin.firestore.FieldValue.arrayRemove(userId),
+        });
+        console.log("Updated post likes (decrement)");
+
+        return res.json({ action: "removed" });
+      } else {
+        // Додавання до обраного
+        articles.push(articleId);
+        console.log("Adding favorite. New articles array:", articles);
+
+        await favoritesRef.set({ articles }, { merge: true });
+        console.log("Updated favorites collection");
+
+        await postRef.update({
+          likes: admin.firestore.FieldValue.increment(1),
+          likedBy: admin.firestore.FieldValue.arrayUnion(userId),
+        });
+        console.log("Updated post likes (increment)");
+
+        return res.json({ action: "added" });
+      }
+    } catch (error) {
+      console.error(
+        "Error in POST https://podoroj-backend.onrender.com/api/favorites:",
+        error
+      );
+      res.status(500).json({ error: "Internal server error" });
     }
-
-    console.log(
-      "Processing favorite for user:",
-      userId,
-      "and article:",
-      articleId
-    );
-
-    const favoritesRef = db.collection("favorites").doc(userId);
-    const postRef = db.collection("posts").doc(articleId);
-
-    // Отримуємо поточний стан
-    console.log("Fetching current state...");
-    const [favoritesSnap, postSnap] = await Promise.all([
-      favoritesRef.get(),
-      postRef.get(),
-    ]);
-
-    let articles = favoritesSnap.exists
-      ? favoritesSnap.data().articles || []
-      : [];
-    const isFavorite = articles.includes(articleId);
-    console.log(
-      "Current state - isFavorite:",
-      isFavorite,
-      "articles:",
-      articles
-    );
-
-    if (isFavorite) {
-      // Видалення з обраного
-      articles = articles.filter((id) => id !== articleId);
-      console.log("Removing favorite. New articles array:", articles);
-
-      await favoritesRef.set({ articles });
-      console.log("Updated favorites collection");
-
-      await postRef.update({
-        likes: admin.firestore.FieldValue.increment(-1),
-        likedBy: admin.firestore.FieldValue.arrayRemove(userId),
-      });
-      console.log("Updated post likes (decrement)");
-
-      return res.json({ action: "removed" });
-    } else {
-      // Додавання до обраного
-      articles.push(articleId);
-      console.log("Adding favorite. New articles array:", articles);
-
-      await favoritesRef.set({ articles }, { merge: true });
-      console.log("Updated favorites collection");
-
-      await postRef.update({
-        likes: admin.firestore.FieldValue.increment(1),
-        likedBy: admin.firestore.FieldValue.arrayUnion(userId),
-      });
-      console.log("Updated post likes (increment)");
-
-      return res.json({ action: "added" });
-    }
-  } catch (error) {
-    console.error("Error in POST /api/favorites:", error);
-    res.status(500).json({ error: "Internal server error" });
   }
-});
+);
 
 app.get("*", (req, res) => {
   console.log("Serving index.html for path:", req.path);
